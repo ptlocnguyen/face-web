@@ -135,7 +135,7 @@ async function recognize() {
         let fd = new FormData();
         fd.append("file", file);
 
-        let ai = await fetch("https://bufalo-api-973102760389.asia-southeast1.run.app/predict", {
+        let ai = await fetch(API + "/recognize_image"), {
             method: "POST",
             body: fd
         });
