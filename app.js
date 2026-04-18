@@ -55,9 +55,9 @@ async function recognize() {
             body: fd
         });
 
-        let data = await res.json();
+        let text = await res.text();
 
-        document.getElementById("rec_result").innerText = "Kết quả: " + data.name;
+        document.getElementById("rec_result").innerText = "Kết quả: " + text;
 
     } catch {
         document.getElementById("rec_result").innerText = "Lỗi mạng";
