@@ -1,175 +1,67 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<title>Face AI System</title>
-
-<style>
-body {
-    font-family: Arial;
-    text-align: center;
-    background: #0f172a;
-    color: white;
-}
-
-.container {
-    margin-top: 40px;
-}
-
-.box {
-    background: #1e293b;
-    padding: 20px;
-    margin: 20px auto;
-    width: 320px;
-    border-radius: 10px;
-}
-
-button {
-    padding: 10px;
-    margin-top: 10px;
-    width: 100%;
-    border: none;
-    border-radius: 5px;
-    background: #3b82f6;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-input {
-    padding: 8px;
-    width: 100%;
-    margin-top: 10px;
-}
-
-.result {
-    margin-top: 10px;
-    font-size: 18px;
-    color: #22c55e;
-}
-
-.preview {
-    margin-top: 10px;
-    max-width: 100%;
-    border-radius: 8px;
-}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face AI System</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h1>Face Recognition System</h1>
+<header>
+    <h1>Face Recognition System</h1>
+</header>
 
 <div class="container">
 
     <!-- REGISTER -->
-    <div class="box">
-        <h3>Đăng ký khuôn mặt</h3>
+    <div class="card">
+        <h2>Đăng ký khuôn mặt</h2>
 
         <input id="name" placeholder="Nhập tên">
-        <input type="file" id="file_reg" accept="image/*" onchange="preview(this, 'img_reg')">
+        <input type="file" id="file_reg" accept="image/*">
 
-        <img id="img_reg" class="preview">
+        <img id="preview_reg" class="preview">
 
         <button onclick="register()">Đăng ký</button>
 
-        <div id="reg_result" class="result"></div>
+        <p id="reg_result"></p>
     </div>
 
     <!-- RECOGNIZE -->
-    <div class="box">
-        <h3>Test nhận diện</h3>
+    <div class="card">
+        <h2>Test nhận diện</h2>
 
-        <input type="file" id="file_rec" accept="image/*" onchange="preview(this, 'img_rec')">
+        <input type="file" id="file_rec" accept="image/*">
 
-        <img id="img_rec" class="preview">
+        <img id="preview_rec" class="preview">
 
         <button onclick="recognize()">Nhận diện</button>
 
-        <div id="rec_result" class="result"></div>
+        <p id="rec_result"></p>
+    </div>
+
+    <!-- LOGS -->
+    <div class="card full">
+        <h2>Lịch sử check-in</h2>
+
+        <button onclick="loadLogs()">Refresh</button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Tên</th>
+                    <th>Thời gian</th>
+                </tr>
+            </thead>
+            <tbody id="log_table"></tbody>
+        </table>
     </div>
 
 </div>
 
-<script>
-
-// ===== THAY URL BACKEND =====
-const API = "https://face-api-z57y.onrender.com";
-
-// ===== PREVIEW IMAGE =====
-function preview(input, id) {
-    const file = input.files[0];
-    if (file) {
-        document.getElementById(id).src = URL.createObjectURL(file);
-    }
-}
-
-// ================= REGISTER =================
-async function register() {
-
-    let file = document.getElementById("file_reg").files[0];
-    let name = document.getElementById("name").value;
-
-    if (!file || !name) {
-        alert("Nhập tên và chọn ảnh");
-        return;
-    }
-
-    let fd = new FormData();
-    fd.append("file", file);
-    fd.append("name", name);
-
-    document.getElementById("reg_result").innerText = "Đang xử lý...";
-
-    try {
-
-        let res = await fetch(API + "/register", {
-            method: "POST",
-            body: fd
-        });
-
-        let txt = await res.text();
-
-        document.getElementById("reg_result").innerText = txt;
-
-    } catch (e) {
-        document.getElementById("reg_result").innerText = "Lỗi kết nối server";
-    }
-}
-
-// ================= RECOGNIZE =================
-async function recognize() {
-
-    let file = document.getElementById("file_rec").files[0];
-
-    if (!file) {
-        alert("Chọn ảnh");
-        return;
-    }
-
-    let fd = new FormData();
-    fd.append("file", file);
-
-    document.getElementById("rec_result").innerText = "Đang nhận diện...";
-
-    try {
-
-        let res = await fetch(API + "/recognize_image", {
-            method: "POST",
-            body: fd
-        });
-
-        let data = await res.json();
-
-        document.getElementById("rec_result").innerText = "Kết quả: " + data.name;
-
-    } catch (e) {
-        document.getElementById("rec_result").innerText = "Lỗi hệ thống";
-    }
-}
-
-</script>
+<script src="app.js"></script>
 
 </body>
 </html>
