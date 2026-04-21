@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nhận diện khuôn mặt</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html" class="nav-home">🏠 Trang chủ</a>
+    <a href="users.html">User</a>
+    <a href="logs.html">Logs</a>
+    <a href="recognize.html">Recognize</a>
+</div>
+
+<div class="container">
+
+    <h2>Nhận diện khuôn mặt</h2>
+
+    <!-- Upload -->
+    <div class="card">
+        <h3>Upload ảnh</h3>
+        <input type="file" id="fileInput">
+        <button id="uploadBtn" class="btn primary" onclick="uploadImage()">Nhận diện</button>
+    </div>
+
+    <!-- Webcam -->
+    <div class="card">
+        <h3>Camera</h3>
+        <video id="video" width="320" height="240" autoplay></video>
+        <br>
+        <button id="captureBtn" class="btn primary" onclick="capture()">Chụp & nhận diện</button>
+    </div>
+
+    <!-- Result -->
+    <div class="card">
+        <h3>Kết quả</h3>
+        <p id="result">Chưa có</p>
+    </div>
+
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/recognize.js"></script>
+
+</body>
+</html>

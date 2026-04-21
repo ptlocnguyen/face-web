@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quản lý User</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="index.html" class="nav-home">🏠 Trang chủ</a>
+        <a href="users.html">User</a>
+        <a href="logs.html">Logs</a>
+    </div>
+
+    <div class="container">
+
+        <h2>Quản lý User</h2>
+
+        <!-- FORM -->
+        <div class="card form">
+            <input id="user_id" placeholder="User ID">
+            <input id="name" placeholder="Tên người dùng">
+            <button class="btn primary" onclick="createUser()">+ Thêm user</button>
+        </div>
+
+        <!-- SEARCH -->
+        <input id="search" placeholder="Tìm user..." onkeyup="loadUsers()">
+
+        <!-- TABLE -->
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Face</th>
+                        <th>Fingerprint</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="userTable"></tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div id="toast"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/users.js"></script>
+
+</body>
+
+</html>

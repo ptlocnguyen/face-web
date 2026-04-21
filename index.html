@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Smart Door Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Smart Door System</h1>
+
+        <div class="card">
+            <h3>Trạng thái hệ thống</h3>
+            <p id="status">Checking...</p>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h3>Quản lý User</h3>
+                <p>Thêm, sửa, xóa user</p>
+                <a href="users.html" class="btn">Đi tới</a>
+            </div>
+
+            <div class="card">
+                <h3>Lịch sử mở cửa</h3>
+                <p>Xem log nhận diện</p>
+                <a href="logs.html" class="btn">Xem log</a>
+            </div>
+
+            <div class="card">
+                <h3>Nhận diện khuôn mặt</h3>
+                <p>Upload ảnh hoặc dùng camera</p>
+                <a href="recognize.html" class="btn">Nhận diện</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="js/config.js"></script>
+
+    <script>
+        async function checkStatus() {
+            try {
+                const res = await fetch(API_BASE + "/");
+                const data = await res.json();
+
+                document.getElementById("status").innerText =
+                    "Server: " + data.status;
+            } catch (e) {
+                document.getElementById("status").innerText =
+                    "Server offline";
+            }
+        }
+
+        checkStatus();
+    </script>
+
+</body>
+
+</html>

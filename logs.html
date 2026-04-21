@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lịch sử mở cửa</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html" class="nav-home">🏠 Trang chủ</a>
+    <a href="users.html">User</a>
+    <a href="logs.html">Logs</a>
+</div>
+
+<div class="container">
+
+    <h2>Lịch sử mở cửa</h2>
+
+    <!-- CONTROL -->
+    <div class="card form">
+        <select id="filter" onchange="loadLogs()">
+            <option value="">Tất cả</option>
+            <option value="success">Thành công</option>
+            <option value="fail">Thất bại</option>
+        </select>
+
+        <button class="btn primary" onclick="loadLogs()">🔄 Refresh</button>
+    </div>
+
+    <!-- TABLE -->
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Method</th>
+                    <th>Status</th>
+                    <th>Device</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody id="logTable"></tbody>
+        </table>
+    </div>
+
+</div>
+
+<div id="toast"></div>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/logs.js"></script>
+
+</body>
+</html>
