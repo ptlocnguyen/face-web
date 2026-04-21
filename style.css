@@ -1,31 +1,88 @@
 body {
+    margin: 0;
     font-family: Arial;
+    display: flex;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 220px;
+    background: #1e293b;
+    color: white;
+    height: 100vh;
     padding: 20px;
 }
 
-.tabs button {
-    margin-right: 10px;
+.sidebar h2 {
+    margin-bottom: 20px;
+}
+
+.sidebar button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
     padding: 10px;
+    border: none;
+    background: #334155;
+    color: white;
+    cursor: pointer;
+}
+
+.sidebar button:hover {
+    background: #475569;
+}
+
+/* MAIN */
+.main {
+    flex: 1;
+    padding: 20px;
+    background: #f1f5f9;
+}
+
+.tab {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* FORM */
+.form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 input, select {
-    display: block;
-    margin: 10px 0;
     padding: 8px;
 }
 
+/* BUTTON */
 button {
-    padding: 8px;
-    background: blue;
-    color: white;
-    border: none;
+    padding: 8px 12px;
 }
 
+/* TABLE */
 table {
     width: 100%;
+    margin-top: 15px;
+    border-collapse: collapse;
 }
 
-td, th {
-    padding: 8px;
-    border-bottom: 1px solid #ccc;
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        display: flex;
+        gap: 10px;
+    }
 }
