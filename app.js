@@ -1,58 +1,85 @@
-const BASE_URL = "https://face-api-z57y.onrender.com";
+const BASE = "https://face-api-z57y.onrender.com";
 
-// =========================
-// REGISTER FACE
-// =========================
+// TAB
+function showTab(id) {
+    document.querySelectorAll(".tab").forEach(t => t.style.display = "none");
+    document.getElementById(id).style.display = "block";
+}
+
+// ================= USER =================
+async function createUser() {
+    let code = document.getElementById("new_code").value;
+    let name = document.getElementById("new_name").value;
+
+    let form = new FormData();
+    form.append("user_code", code);
+    form.append("full_name", name);
+
+    await fetch(BASE + "/users", {
+        method: "POST",
+        body: form
+    });
+
+    loadUsers();
+}
+
+async function loadUsers() {
+    let res = await fetch(BASE + "/users");
+    let data = await res.json();
+
+    let list = document.getElementById("user_list");
+    let select = document.getElementById("face_user");
+
+    list.innerHTML = "";
+    select.innerHTML = "";
+
+    data.forEach(u => {
+        list.innerHTML += `<li>${u.user_code} - ${u.full_name}</li>`;
+        select.innerHTML += `<option value="${u.user_code}">${u.full_name}</option>`;
+    });
+}
+
+// ================= FACE =================
 async function registerFace() {
-    const userCode = document.getElementById("user_code").value;
-    const files = document.getElementById("files").files;
+    let user = document.getElementById("face_user").value;
+    let files = document.getElementById("face_files").files;
 
-    let formData = new FormData();
-    formData.append("user_code", userCode);
+    let form = new FormData();
+    form.append("user_code", user);
 
-    for (let i = 0; i < files.length; i++) {
-        formData.append("files", files[i]);
+    for (let f of files) {
+        form.append("files", f);
     }
 
-    try {
-        let res = await fetch(`${BASE_URL}/register-face`, {
-            method: "POST",
-            body: formData
-        });
+    let res = await fetch(BASE + "/register-face", {
+        method: "POST",
+        body: form
+    });
 
-        let data = await res.json();
+    let data = await res.json();
 
-        document.getElementById("register_result").innerText =
-            JSON.stringify(data, null, 2);
-
-    } catch (err) {
-        document.getElementById("register_result").innerText =
-            "Lỗi: " + err;
-    }
+    document.getElementById("face_result").innerText =
+        JSON.stringify(data, null, 2);
 }
 
-// =========================
-// RECOGNIZE
-// =========================
-async function recognize() {
-    const file = document.getElementById("test_file").files[0];
+// ================= LOG =================
+async function loadLogs() {
+    let res = await fetch(BASE + "/logs");
+    let data = await res.json();
 
-    let formData = new FormData();
-    formData.append("file", file);
+    let table = document.getElementById("log_table");
+    table.innerHTML = "";
 
-    try {
-        let res = await fetch(`${BASE_URL}/recognize`, {
-            method: "POST",
-            body: formData
-        });
-
-        let data = await res.json();
-
-        document.getElementById("recognize_result").innerText =
-            JSON.stringify(data, null, 2);
-
-    } catch (err) {
-        document.getElementById("recognize_result").innerText =
-            "Lỗi: " + err;
-    }
+    data.forEach(l => {
+        table.innerHTML += `
+        <tr>
+            <td>${l.full_name_snapshot}</td>
+            <td>${l.identify_method}</td>
+            <td>${l.result}</td>
+            <td>${l.time}</td>
+        </tr>`;
+    });
 }
+
+// init
+loadUsers();
